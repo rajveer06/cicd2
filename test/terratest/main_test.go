@@ -14,7 +14,7 @@ func TestTerraformInitPlanValidateDestroy(t *testing.T) {
 	// Specify the path to the Terraform code that will be tested
 	terraformOptions := &terraform.Options{
 		// Set the path to the Terraform code that will be tested.
-		TerraformDir: "../path/to/your/terraform/code",
+		TerraformDir: "../",
 	}
 
 	// Terraform Init and Validate
