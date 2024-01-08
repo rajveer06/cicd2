@@ -19,7 +19,7 @@ jobs:
         terraform_version: 0.14.7
 
     - name: Install Terratest
-      run: go install github.com/gruntwork-io/terratest/modules/terraform
+      run: go install github.com/gruntwork-io/terratest/modules/terraform@latest
 
     - name: Run Terratest
       run: |
