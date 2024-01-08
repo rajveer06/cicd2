@@ -25,4 +25,4 @@ jobs:
 
     - name: Run Terratest
       run: |
-        go test -v ./test/terratest/
+        go test -v ../test/terratest/
