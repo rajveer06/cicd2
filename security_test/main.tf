@@ -1,16 +1,8 @@
 provider "aws" {
-  region = "ap-south-1"  
-}
-
-resource "aws_vpc" "TestCicdVpc" {
-  cidr_block = "10.0.0.0/16"
+  region = "us-west-2"  # Change this to your desired AWS region
 }
 
 resource "aws_instance" "example" {
-  ami           = "ami-0287a05f0ef0e9d9a"
+  ami           = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
-
-  tags = {
-    Name = "Rajveer"
-  }
 }

@@ -13,7 +13,7 @@ func TestTerraformInitAndValidate(t *testing.T) {
 
 	// Path to the Terraform code that will be tested
 	terraformOptions := &terraform.Options{
-		TerraformDir: "../security_test",
+		TerraformDir: "./security_test",
 	}
 
 	// Run `terraform init` and `terraform validate` to initialize the working directory and validate the Terraform configuration
@@ -32,7 +32,7 @@ func TestTerraformPlan(t *testing.T) {
 	// Path to the Terraform code that will be tested
 	terraformOptions := &terraform.Options{
 		// Set the path to the Terraform code that will be tested.
-		TerraformDir: "../security_test",
+		TerraformDir: "./security_test",
 	}
 
 	// Run `terraform init` and `terraform plan`. Fail the test if there are any errors.
@@ -51,7 +51,7 @@ func TestTerraformPlanCleanup(t *testing.T) {
 	// Path to the Terraform code that will be tested
 	terraformOptions := &terraform.Options{
 		// Set the path to the Terraform code that will be tested.
-		TerraformDir: "../security_test",
+		TerraformDir: "./security_test",
 	}
 
 	// Run `terraform init` and `terraform destroy` to clean up any resources that were created
