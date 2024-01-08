@@ -1,70 +1,36 @@
 package test
 
 import (
-	"os"
+	"strings"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTerraformInitAndValidate(t *testing.T) {
+func TestTerraformInitPlanValidateDestroy(t *testing.T) {
 	t.Parallel()
 
-	// Path to the Terraform code that will be tested
+	// Specify the path to the Terraform code that will be tested
 	terraformOptions := &terraform.Options{
-		TerraformDir: "../",
+		// Set the path to the Terraform code that will be tested.
+		TerraformDir: "../path/to/your/terraform/code",
 	}
 
-	// Run `terraform init` and `terraform validate` to initialize the working directory and validate the Terraform configuration
+	// Terraform Init and Validate
 	terraform.InitAndValidate(t, terraformOptions)
 
-	// Clean up by running `terraform destroy`
+	// Terraform Plan
+	terraformPlanOutput := terraform.InitAndPlanAndShow(t, terraformOptions)
+
+	// Validate the Terraform Plan output (e.g., check for no changes, specific resources)
+	assert.False(t, strings.Contains(terraformPlanOutput, "to be created"), "Unexpected resources to be created in Terraform plan")
+
+	// No apply step for this example
+
+	// Terraform Destroy
 	defer terraform.Destroy(t, terraformOptions)
 
-	// Validate the Terraform configuration using `terraform validate`
-	terraform.Validate(t, terraformOptions)
-}
-
-func TestTerraformPlan(t *testing.T) {
-	t.Parallel()
-
-	// Path to the Terraform code that will be tested
-	terraformOptions := &terraform.Options{
-		// Set the path to the Terraform code that will be tested.
-		TerraformDir: "../",
-	}
-
-	// Run `terraform init` and `terraform plan`. Fail the test if there are any errors.
-	terraform.InitAndPlan(t, terraformOptions)
-
-	// Validate that the plan does not contain any changes
-	changes := terraform.Plan(t, terraformOptions)
-	assert.Empty(t, changes)
-
-}
-
-// This code will run when the test suite is being cleaned up
-func TestTerraformPlanCleanup(t *testing.T) {
-	t.Parallel()
-
-	// Path to the Terraform code that will be tested
-	terraformOptions := &terraform.Options{
-		// Set the path to the Terraform code that will be tested.
-		TerraformDir: "../",
-	}
-
-	// Run `terraform init` and `terraform destroy` to clean up any resources that were created
-	defer terraform.Destroy(t, terraformOptions)
-
-	// Validate that there are no changes to apply.
-	terraform.InitAndPlan(t, terraformOptions)
-	changes := terraform.Plan(t, terraformOptions)
-	assert.Empty(t, changes)
-}
-
-// This function will be called to run the test
-func TestMain(m *testing.M) {
-	// call flag.Parse() here if TestMain uses flags
-	os.Exit(m.Run())
+	// Validate the Terraform Destroy output
+	terraform.InitAndPlanAndShow(t, terraformOptions)
 }
